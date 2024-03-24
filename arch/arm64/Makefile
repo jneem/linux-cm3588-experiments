@@ -217,3 +217,29 @@ define archhelp
   echo  '                  (distribution) /sbin/installkernel or'
   echo  '                  install to $$(INSTALL_PATH) and run lilo'
 endef
+
+MAKE_MODULES ?= y
+
+kernel.img: Image
+	$(Q)scripts/mkkrnlimg $(objtree)/arch/arm64/boot/Image $(objtree)/kernel.img >/dev/null
+	@echo '  Image:  kernel.img is ready'
+
+DTBS := rk3*-nanopi*-rev*.dtb
+
+nanopi4-images: dtbs kernel.img $(LOGO) $(LOGO_KERNEL)
+	$(Q)$(srctree)/scripts/mkimg --dtb $(DTBS) --keep-dtb-name
+
+nanopi5-images: nanopi4-images
+nanopi6-images: nanopi4-images
+PHONY += nanopi4-images nanopi5-images nanopi6-images
+
+%.img: kernel.img
+ifeq ("$(CONFIG_MODULES)$(MAKE_MODULES)$(srctree)","yy$(objtree)")
+	$(Q)$(MAKE) rockchip/$*.dtb Image.lz4 modules
+else
+	$(Q)$(MAKE) rockchip/$*.dtb Image.lz4
+endif
+	$(Q)$(srctree)/scripts/mkimg --dtb $*.dtb
+
+CLEAN_DIRS += out
+CLEAN_FILES += boot.img kernel.img resource.img zboot.img
