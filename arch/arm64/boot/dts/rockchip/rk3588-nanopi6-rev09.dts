@@ -19,10 +19,10 @@
 	aliases {
 		mmc0 = &sdhci;
 		mmc1 = &sdmmc;
-		// nvme0 = &nvme0;
-		// nvme1 = &nvme1;
-		// nvme2 = &nvme2;
-		// nvme3 = &nvme3;
+		nvme0 = &nvme0;
+		nvme1 = &nvme1;
+		nvme2 = &nvme2;
+		//nvme3 = &nvme3;
 	};
 
 	chosen {
@@ -455,7 +455,6 @@
 	status = "okay";
 };
 
-/*
 &pcie2x1l0 {
 	max-link-speed = <3>;
 	num-lanes = <1>;
@@ -475,6 +474,7 @@
 	};
 };
 
+/*
 &pcie2x1l1 {
 	max-link-speed = <3>;
 	num-lanes = <1>;
@@ -493,6 +493,7 @@
 		};
 	};
 };
+*/
 
 &pcie2x1l2 {
 	reset-gpios = <&gpio4 RK_PA4 GPIO_ACTIVE_HIGH>;
@@ -510,6 +511,7 @@
 		};
 	};
 };
+/*
 
 &pcie30phy {
 	status = "okay";
@@ -534,7 +536,6 @@
 	};
 };
 
-/*
 &pcie3x2 {
 	max-link-speed = <3>;
 	num-lanes = <1>;
@@ -552,7 +553,6 @@
 		};
 	};
 };
-*/
 
 &pinctrl {
 	gpio-key {
